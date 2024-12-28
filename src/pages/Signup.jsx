@@ -11,10 +11,10 @@ import toast,{ Toaster } from 'react-hot-toast';
 // import { addDoc, collection } from "firebase/firestore";
 // import { db } from "../firebase/firebasse";
 import { useDispatch } from "react-redux";
-import { addUser } from "../store/slices/users";
+// import { addUser } from "../store/slices/users";
 
 export default function Signup(props) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // const { setDisplayRes } = useContext(authContext); // Access setDisplayName function from context
   const navigate = useNavigate();
