@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
-import { prime1, prime2, primesvg } from "../../assets/index";
-import ReactImageZoom from "react-image-zoom";
+import {  prime2, primesvg } from "../../assets/index";
+
 import Zoom from "react-medium-image-zoom";
 import ReactImageMagnify from "react-image-magnify";
 import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from "uuid";
+
 import { db } from "../../firebase/getProducts";
 import { addToCart } from "../../store/slices/amazonSlice";
 import { GETallProducts } from "../../store/slices/allProducts";
@@ -26,8 +26,6 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 // import Link from '@mui/material/Link';
 import Stack from "@mui/material/Stack";
-import NavigateNextIcon from "@mui/icons-material/NavigateNext";
-import { grey } from "@mui/material/colors";
 
 function handleClick(event) {
   event.preventDefault();
@@ -38,7 +36,7 @@ export default function Details(props) {
   const { id } = useParams();
   const { sim } = useParams();
   const [prd, setPrd] = useState();
-  const [showMore, setShowMore] = useState(false);
+ 
   let allProducts = useSelector((state) => state.allProducts.allProducts);
   const dispatch = useDispatch();
   const location = useLocation();
