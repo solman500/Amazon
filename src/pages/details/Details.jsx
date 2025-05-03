@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
 import { prime1, prime2, primesvg } from "../../assets/index";
-import ImageZoom from "react-image-zooom";
 import ReactImageZoom from "react-image-zoom";
 import Zoom from "react-medium-image-zoom";
 import ReactImageMagnify from "react-image-magnify";

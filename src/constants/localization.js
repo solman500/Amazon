@@ -48,8 +48,8 @@ export const Localization = {
             en: "Books",
             ar: "كتب"
         }, helloSing: {
-            en: "Hello, Sign in",
-            ar: "مرحباً، تسجيل الدخول"
+            en: " Sign in",
+            ar: " تسجيل الدخول"
         },
         hello: {
             en: "Hello",

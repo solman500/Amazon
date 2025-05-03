@@ -15,7 +15,7 @@ import { logout } from "../../firebase/auth";
 import MenuPopupState from "../../utils/Dropdown";
 import { Localization } from "../../constants/localization";
 import { languageContext } from "../../Contexts/language";
-import './Search.css'
+import "./Search.css";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ const Header = () => {
 
   return (
     <div className="sticky top-0 z-50 bg-black">
-      <div className="w-full bg-amazon_blue text-white px-3 py-2 flex md:justify-between items-center gap-2 md:gap-4 lgl:gap-2 xl:gap-4">
+      <div className="w-full bg-amazon_blue justify-between text-white px-3 py-2 flex md:justify-between items-center gap-2 md:gap-4 lgl:gap-2 xl:gap-4">
         {/* ===================== Header Image Start here ======================== */}
         <Link to="/">
           <div className="headerHover">
@@ -116,7 +116,7 @@ const Header = () => {
               >
                 {allItems.map((item) => (
                   <li
-                  className="text-sm tracking-wide font-titleFont border-b-[1px] border-b-transparent hover:border-b-amazon_blue cursor-pointer duration-200"
+                    className="text-sm tracking-wide font-titleFont border-b-[1px] border-b-transparent hover:border-b-amazon_blue cursor-pointer duration-200"
                     key={item._id}
                     onClick={() =>
                       item.title &&
@@ -150,7 +150,7 @@ const Header = () => {
             <div className="dropDown w-full">
               {prds
                 .filter((val) => {
-                  const searchTxt = input.toLowerCase() ;
+                  const searchTxt = input.toLowerCase();
                   const productTitle = val.title.toLowerCase();
                   return (
                     searchTxt &&
@@ -177,8 +177,7 @@ const Header = () => {
           className="flex flex-col items-start justify-center headerHover "
           onClick={changeLanguage}
         >
-          <p></p>
-          <p className="hidden md:inline-flex text-sm font-semibold -mt-1 text-whiteText">
+          <p className="flex text-sm font-semibold -mt-1 text-whiteText">
             <img src={egyptFlag} alt="Egypt Flag" width="20px" height="20px" />
             {language === "en"
               ? Localization.header.lang.en
@@ -200,10 +199,11 @@ const Header = () => {
           </div>
         ) : (
           <Link to="/signin">
-            <div className="flex flex-col items-start justify-center headerHover">
-              <p className="text-xs text-lightText font-light">
-              {language==='en'?Localization.header.helloSing.en:Localization.header.helloSing.ar}
-                {/* Hello,sign in{" "} */}
+            <div className="flex flex-col items-start justify-center headerHover ">
+              <p className=" text-lightText  font-bold">
+                {language === "en"
+                  ? Localization.header.helloSing.en
+                  : Localization.header.helloSing.ar}
               </p>
               <p className="hidden md:inline-flex text-sm font-semibold -mt-1 text-whiteText">
                 Accounts & Lists <span></span>
@@ -224,9 +224,15 @@ const Header = () => {
         {/* ===================== Header Orders Start here ======================== */}
         <Link to="/orders">
           <div className="hidden mdl:flex flex-col items-start justify-center headerHover">
-          <p className="text-xs text-lightText font-light">{language==='en'?Localization.header.Returns.en:Localization.header.Returns.ar}</p>
-          <p className="text-sm font-semibold -mt-1 text-whiteText">
-            {language==='en'?Localization.header.Orders.en:Localization.header.Orders.ar}
+            <p className="text-xs text-lightText font-light">
+              {language === "en"
+                ? Localization.header.Returns.en
+                : Localization.header.Returns.ar}
+            </p>
+            <p className="text-sm font-semibold -mt-1 text-whiteText">
+              {language === "en"
+                ? Localization.header.Orders.en
+                : Localization.header.Orders.ar}
             </p>
           </div>
         </Link>
@@ -240,12 +246,16 @@ const Header = () => {
               className="w-auto object-cover h-8"
             />
             <span
-              className="absolute text-amazon_yellow text-sm top-0 left-1/3 transform -translate-x-1/2 font-semibold ml-1"
+              className="absolute text-amazon_yellow  text-sm top-0 left-[37%] transform -translate-x-1/2 font-semibold ml-1"
               style={{ fontSize: "16px" }}
             >
               {products.length > 0 ? products.length : 0}
             </span>
-            <p className="text-sm text-white font-bold">{language==="en"?Localization.header.cart.en:Localization.header.cart.ar}</p>
+            <p className="text-sm text-white font-bold">
+              {language === "en"
+                ? Localization.header.cart.en
+                : Localization.header.cart.ar}
+            </p>
           </div>
         </Link>
 

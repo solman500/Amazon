@@ -80,6 +80,8 @@ function App() {
     position: "relative",
     width: "100px", // Adjust width as needed
     height: "100px", // Adjust height as needed
+    marginBottom: "15px",
+
   };
 
   const imageStyle = {
@@ -93,6 +95,7 @@ function App() {
     backgroundRepeat: "no-repeat",
     backgroundSize: "contain",
     zIndex: "-1", // Ensure the image is positioned behind the spinner
+    
   };
 
   useEffect(() => {

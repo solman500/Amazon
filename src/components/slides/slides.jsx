@@ -1,269 +1,151 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useLocation, useParams, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Virtual } from "swiper/modules";
+import { useNavigate } from "react-router-dom";
 import { GETallProducts } from "../../store/slices/allProducts";
-import Card from "../../components/card/card";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { Virtual, Navigation, Pagination } from "swiper/modules";
-import { right, left } from "../../assets/index";
 import { getCategoriesData } from "../../firebase/getCategory";
 import { getBrandsData } from "../../firebase/getBrands";
-import { adds } from "../../assets/index";
+import Card from "../../components/card/card";
 import FadeIn from "../../utils/fade.jsx";
-import "./slides.css";
-
+import { right, left } from "../../assets/index";
 import "swiper/css";
 import "swiper/css/navigation";
-import { useNavigate } from 'react-router-dom';
-export default function Slides(props) {
-  // const [prd, setPrd] = useState();
-  let allProducts = useSelector((state) => state.allProducts.allProducts);
+import "swiper/css/pagination";
+
+
+export default function Slides() {
   const dispatch = useDispatch();
+  const allProducts = useSelector((state) => state.allProducts.allProducts);
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(GETallProducts());
-  }, []);
+    getCategoriesData(setCategories, () => {});
+    getBrandsData(setBrands, () => {});
+  }, [dispatch]);
 
-  const [isActive, setIsActive] = useState(false);
-  const toggleActive = () => {
-    setIsActive(!isActive);
-  };
-
-  const swiperBreakPoints2 = {
-    0: {
-      slidesPerView: 2,
-      speed: 400,
-      slidesPerGroup: 2,
-    },
-    768: {
-      slidesPerView: 4,
-      speed: 500,
-      slidesPerGroup: 3,
-    },
-  };
-
-  const pagination1 = {
+  const pagination = {
     clickable: true,
-    renderBullet: function (index, className) {
-      return `<span className="${className}"></span>`;
-    },
+    renderBullet: (index, className) => `<span class="${className}"></span>`,
   };
 
-  const [swiperRef, setSwiperRef] = useState(null);
-
-  function handleSwiperNav(num) {
-    return {
-      nextEl: `.swiper${num}-btn-next`,
-      prevEl: `.swiper${num}-btn-prev`,
-      disabledClass: `.swiper${num}-button-disabled`,
-    };
-  }
-  const swiperBreakPoints = {
-    0: {
-      slidesPerView: 1,
-      speed: 400,
-      slidesPerGroup: 1,
-    },
-    768: {
-      slidesPerView: 4,
-      speed: 500,
-      slidesPerGroup: 3,
-    },
+  const handleSwiperNav = {
+    nextEl: ".custom-next",
+    prevEl: ".custom-prev",
   };
 
-  const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    getCategoriesData(setCategories, setLoading);
-    getBrandsData(setBrands, setLoading);
-  }, []);
-
-
-  const navigate = useNavigate();
-
-  const searchCategory = (brandName) => {
-    // Navigate to 'brandsdetails' with brand name as a parameter
-    navigate(`/brandsdetails/${brandName}`);
+  const breakpointsProducts = {
+    0: { slidesPerView: 1, slidesPerGroup: 1 },
+    480: { slidesPerView: 2, slidesPerGroup: 2 },
+    768: { slidesPerView: 3, slidesPerGroup: 3 },
+    1024: { slidesPerView: 4, slidesPerGroup: 4 },
   };
 
-
-
-  const searchCategory2 = (categoryName) => {
-    // Navigate to 'brandsdetails' with category name as a parameter
-    navigate(`/catgory/${categoryName}`);
+  const breakpointsBrandsCats = {
+    0: { slidesPerView: 2 },
+    480: { slidesPerView: 3 },
+    768: { slidesPerView: 4 },
+    1024: { slidesPerView: 5 },
   };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   return (
     <>
+      {/* Today's Deals */}
       <FadeIn>
-        <div className="today_deals_heading m-auto">
+        <div className="today_deals_heading">
           <h1>Shop Today's Deals</h1>
-          <p>
-            <a href="#">See all deals</a>
-          </p>
+          <p><a href="#">See all deals</a></p>
         </div>
-        <div className="bg-amazonclone-background">
-          <div className="z-30 m-3">
-            <Swiper
-              className="swiper swiper2"
-              modules={[Virtual, Navigation, Pagination]}
-              onSwiper={setSwiperRef}
-              slidesPerView={5}
-              centeredSlides={true}
-              spaceBetween={3}
-              pagination={pagination1}
-              navigation={{
-                nextEl: ".custom-next",
-                prevEl: ".custom-prev",
-              }}
-              virtual
-              initialSlide={5}
-              breakpoints={swiperBreakPoints2}
-              renderVirtualSlides={(swiper) => {
-                return allProducts.map((prd, index) => (
-                  <SwiperSlide
-                    key={`virtual-slide-${index}`}
-                    virtualIndex={index}
-                  >
-                    <Card prd={prd} />
-                  </SwiperSlide>
-                ));
-              }}
-            >
-              {allProducts.map((prd) => (
-                <SwiperSlide key={prd.id}>
-                  <Card prd={prd} />
-                </SwiperSlide>
-              ))}
-              <div className="custom-next" onClick={() => toggleActive(this)}>
-                <img className="to" src={right} alt="" />
-              </div>
-              <div className="custom-prev" onClick={() => toggleActive(this)}>
-                <img className="to" src={left} alt="" />
-              </div>
-            </Swiper>
-
-            {/* {allProducts.length > 0 && (
-              <div className="experience-component product-list my-5">
-                <button className="swiper1-btn-next swiper-btn-next" />
-                <button className="swiper1-btn-prev swiper-btn-prev" />
-                <h3 className=" pe-2 mt-5 mb-4">
-                  Inspired by your browsing history
-                </h3>
-
-                <Swiper
-                  className="swiper swiper1"
-                  spaceBetween={10}
-                  navigation={handleSwiperNav(1)}
-                  pagination={pagination1}
-                  breakpoints={swiperBreakPoints}
-                >
-                  {allProducts.map((prd) => (
-                    <SwiperSlide>
-                      <Card prd={prd} />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            )} */}
-          </div>
-        </div>
-      </FadeIn>
-
-      <FadeIn>
-        <div className="today_deals_heading  m-auto">
-          <h1>Shop by Category</h1>
-          <p>
-            <a href="/categories">See all Categories</a>
-          </p>
-        </div>
-        <div className="bg-white m-3">
+        <div className="bg-amazonclone-background m-3">
           <Swiper
-            slidesPerView={5}
-            spaceBetween={30}
-            centeredSlides={true}
-            pagination={pagination1}
-            navigation={{
-              nextEl: ".custom-next",
-              prevEl: ".custom-prev",
-            }}
-            modules={[Navigation]}
+            modules={[Virtual, Navigation, Pagination]}
+            slidesPerView={2}
+            spaceBetween={10}
+            // pagination={pagination}
+            navigation={handleSwiperNav}
+            // breakpoints={breakpointsProducts}
+            virtual
           >
-             {categories.map((category, index) => (
-        <SwiperSlide
-          key={index}
-          onClick={() => searchCategory2(category.slug)}
-          className="cursor-pointer"
-        >
-          <img
-            id="imgCat"
-            src={category.image}
-            alt={`${category.name} category`}
-          />
-        </SwiperSlide>
+            {allProducts.map((prd, index) => (
+              <div className="space-x-2">
+              <SwiperSlide key={`product-${index}`} virtualIndex={index}>
+                <Card prd={prd} className="w-full h-40 object-cover rounded-md m-2"/>
+              </SwiperSlide>
+              </div>
             ))}
-            <div className="custom-next" onClick={() => toggleActive(this)}>
-              <img className="to" src={right} alt="" />
-            </div>
-            <div className="custom-prev" onClick={() => toggleActive(this)}>
-              <img className="to" src={left} alt="" />
-            </div>
+            <div className="custom-next"><img className="to" src={right} alt="Next" /></div>
+            <div className="custom-prev"><img className="to" src={left} alt="Prev" /></div>
           </Swiper>
         </div>
       </FadeIn>
 
+      {/* Categories */}
       <FadeIn>
-        <div className="today_deals_heading  m-auto">
+        <div className="today_deals_heading">
+          <h1>Shop by Category</h1>
+          <p><a href="/categories">See all Categories</a></p>
+        </div>
+        <div className=" m-3">
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={20}
+            centeredSlides={true}
+            pagination={pagination}
+            navigation={handleSwiperNav}
+            modules={[Navigation]}
+            breakpoints={breakpointsBrandsCats}
+          >
+            {categories.map((cat, i) => (
+             <SwiperSlide
+             key={`cat-${i}`}
+             virtualIndex={i}
+             onClick={() => navigate(`/catgory/${cat.slug}`)}
+             className="cursor-pointer"
+           >
+             <img
+               id="imgCat"
+               src={cat.image}
+               alt={cat.name}
+               className="w-full h-40 object-cover rounded-md m-2"
+             />
+           </SwiperSlide>
+            ))}
+            <div className="custom-next"><img className="to" src={right} alt="Next" /></div>
+            <div className="custom-prev"><img className="to" src={left} alt="Prev" /></div>
+          </Swiper>
+        </div>
+      </FadeIn>
+
+      {/* Brands */}
+      <FadeIn>
+        <div className="today_deals_heading">
           <h1>Shop by Brands</h1>
-          <p>
-            <a href="/brands">See all Brands</a>
-          </p>
+          <p><a href="/brands">See all Brands</a></p>
         </div>
         <div className="bg-white m-3">
           <Swiper
             slidesPerView={5}
-            spaceBetween={30}
+            spaceBetween={20}
             centeredSlides={true}
-            pagination={pagination1}
-            navigation={{
-              nextEl: ".custom-next",
-              prevEl: ".custom-prev",
-            }}
+            pagination={pagination}
+            navigation={handleSwiperNav}
             modules={[Navigation]}
+            breakpoints={breakpointsBrandsCats}
           >
-               {brands.map((brand, index) => (
-        <SwiperSlide
-          key={index}
-          onClick={() => searchCategory(brand.name)}
-          className="cursor-pointer"
-        >
-          <img id="imgCat" src={brand.image} alt={`${brand.name} category`} />
-        </SwiperSlide>
+            {brands.map((brand, i) => (
+              <SwiperSlide
+                key={`brand-${i}`}
+                onClick={() => navigate(`/brandsdetails/${brand.name}`)}
+                className="cursor-pointer"
+              >
+                <img id="imgCat" src={brand.image} alt={brand.name} />
+              </SwiperSlide>
             ))}
-            <div className="custom-next" onClick={() => toggleActive(this)}>
-              <img className="to" src={right} alt="" />
-            </div>
-            <div className="custom-prev" onClick={() => toggleActive(this)}>
-              <img className="to" src={left} alt="" />
-            </div>
+            <div className="custom-next"><img className="to" src={right} alt="Next" /></div>
+            <div className="custom-prev"><img className="to" src={left} alt="Prev" /></div>
           </Swiper>
         </div>
       </FadeIn>

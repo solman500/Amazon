@@ -1,16 +1,19 @@
 import React from "react";
+import "./HomePageCard.css";
+
 const HomePageCard = ({ title, img, link }) => {
     return (
-        <div className="h-[450px] w-auto bg-white z-30 m-3">
-            <div className="text-lg xl:text-xl font-semibold ml-4 mt-4">{title}</div>
-            <div className="h-[300px] m-3">
+        <div className="homepage-card">
+            <div className="card-title">{title}</div>
+            <div className="card-image-container">
                 <img
-                    className="h-[100%] w-[100%] object-cover"
+                    className="card-image"
                     src={img}
                     alt="Home card"
+                    loading="lazy"
                 />
             </div>
-            <div className="text-xs xl:text-sm text-blue-400 ml-4">{link}</div>
+            <div className="card-link">{link}</div>
         </div>
     );
 };

@@ -1,22 +1,84 @@
+.carousel {
+    position: relative;
+    width: 100%;
+}
+
+.carousel img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
 .custom-arrow {
     position: absolute;
-    top: 20%;
-    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
     cursor: pointer;
-    background: transparent;
-    transition: background 0.3s ease;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.custom-arrow:hover {
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .custom-arrow.left {
-    left: 10px;
-    width: 35px;
-    height: 35px;
+    left: 20px;
 }
 
 .custom-arrow.right {
-    right: 10px;
-    width: 35px;
-    height: 35px;
+    right: 20px;
+}
+
+.custom-arrow img {
+    width: 30px;
+    height: 30px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .carousel {
+        margin-bottom: 2rem;
+    }
+
+    .carousel .slide img {
+        height: 300px;
+        object-fit: cover;
+    }
+
+    .custom-arrow {
+        padding: 8px;
+    }
+
+    .custom-arrow img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel {
+        margin-bottom: 1.5rem;
+    }
+
+    .carousel .slide img {
+        height: 250px;
+    }
+
+    .custom-arrow {
+        padding: 6px;
+    }
+
+    .custom-arrow.left {
+        left: 10px;
+    }
+
+    .custom-arrow.right {
+        right: 10px;
+    }
 }
 
 /* .custom-arrow::before {
