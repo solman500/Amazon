@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
-import {  prime2, primesvg } from "../../assets/index";
+import { prime2, primesvg } from "../../assets/index";
 
 import Zoom from "react-medium-image-zoom";
 import ReactImageMagnify from "react-image-magnify";
@@ -36,7 +36,7 @@ export default function Details(props) {
   const { id } = useParams();
   const { sim } = useParams();
   const [prd, setPrd] = useState();
- 
+
   let allProducts = useSelector((state) => state.allProducts.allProducts);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -280,12 +280,13 @@ export default function Details(props) {
             {/* ========================================================================================= First        */}
 
             <Grid
-              spacing={{ xs: 4, md: 3 }}
-              columns={{ xs: 7, sm: 7, md: 12 }}
-              className=" contdetailes "
+              spacing={{ xs: 2, md: 3 }}
+              columns={{ xs: 12, sm: 12, md: 12 }}
+              className="contdetailes"
               container
             >
-              <Grid item xs={1}>
+              {/* ------------------------------BreadCrump---------------------- */}
+              <Grid item xs={12} md={1}>
                 <div className="image-row  imgslide pe-2 image-container">
                   {prd.images.map((image, index) => (
                     <img
@@ -307,20 +308,8 @@ export default function Details(props) {
                 </div>
               </Grid>
 
-              <Grid item xs={4}>
-                {/* <img
-                  className="placeorder__image"
-                  src={previewImage || prd.images[0]}
-                /> */}
-                {/* <div className="placeorder__image">
-                  <ReactImageZoom
-                    {...{
-                      img: previewImage || (prd?.images && prd.images[0]),
-                      zoomWidth: 400,
-                      zoomStyle: "z-index: 1000;",
-                    }}
-                  />
-                </div> */}
+              {/* ---------------------------Image--------------------------- */}
+              <Grid item xs={12} md={4}>
                 <div className="placeorder__image image-container imagedetails image-container2">
                   <ReactImageMagnify
                     {...{
@@ -346,16 +335,10 @@ export default function Details(props) {
                     <GoShare />
                   </div>
                 </div>
-                {/* <Swiper className='placeorder__image swiper swiper1'
-                                navigation={handleSwiperNav(1)}
-                                breakpoints={swiperBreakPoints1}
-                            >
-                                {prdImages.map(image => <SwiperSlide className='imgslider placeorder__image'>{image}</SwiperSlide>)}
-                            </Swiper> */}
               </Grid>
               {/* ========================================================================================= Second        */}
 
-              <Grid item xs={4}>
+              <Grid item xs={12} md={4}>
                 <div className="placeholder__description  detailssmall">
                   <div
                     style={{
@@ -473,7 +456,6 @@ export default function Details(props) {
                             />
                             <div className="color__title">
                               {colorNames[idx] || "Color"}{" "}
-                              {/* Use color name or fallback to 'Color' */}
                             </div>
                           </div>
                         </ToggleButton>
@@ -526,7 +508,6 @@ export default function Details(props) {
                     ) : (
                       <div>
                         <ul>{truncateDescription(prd.description, 100)}</ul>
-                        {/* Adjust the character limit (100 in this example) */}
                       </div>
                     )}
                     <button
@@ -555,7 +536,7 @@ export default function Details(props) {
                 direction="row"
                 justifyContent="center"
                 alignItems="center"
-                xs={3}
+                xs={12} md={3}
                 className="too"
               >
                 <Paper variant="outlined" className="placeorder__order1">

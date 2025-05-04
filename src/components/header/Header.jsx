@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
+import { Button } from "@mui/material";
+import { usePopupState } from "material-ui-popup-state/hooks";
 
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -11,11 +13,13 @@ import HeaderBottom from "./HeaderBottom";
 import { Link, useNavigate } from "react-router-dom";
 import { getProductsData } from "../../firebase/getProducts";
 import { authContext } from "../../Contexts/isAuth";
-import { logout } from "../../firebase/auth";
+import { logout, login } from "../../firebase/auth";
 import MenuPopupState from "../../utils/Dropdown";
 import { Localization } from "../../constants/localization";
 import { languageContext } from "../../Contexts/language";
 import "./Search.css";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebasse"; // or firebase.js
 
 const Header = () => {
   const navigate = useNavigate();
@@ -28,9 +32,11 @@ const Header = () => {
   const products = useSelector((state) => state.amazonReducer.products);
   const [loading, setLoading] = useState(true);
   const { isLogin, setLogin, displayName } = useContext(authContext);
+  const [localDisplayName, setLocalDisplayName] = useState(localStorage.getItem("displayName") || "");
   // const navigate = useNavigate();
   const ref = useRef();
   const [showAll, setShowAll] = useState(false);
+
   useEffect(() => {
     document.body.addEventListener("click", (e) => {
       if (e.target.contains(ref.current)) {
@@ -38,9 +44,21 @@ const Header = () => {
       }
     });
   }, [ref, showAll]);
+
   useEffect(() => {
     getProductsData(setPrds, setLoading);
   });
+
+  useEffect(() => {
+    // Update displayName if it changes in localStorage (e.g., after login)
+    const handleStorageChange = () => {
+      setLocalDisplayName(localStorage.getItem("displayName") || "");
+    };
+    window.addEventListener("storage", handleStorageChange);
+    // Optionally, update on mount
+    setLocalDisplayName(localStorage.getItem("displayName") || "");
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   const onTyping = (val) => {
     setInput(val);
@@ -68,6 +86,26 @@ const Header = () => {
     setLanguage(language === "en" ? "ar" : "en");
     console.log(language);
   };
+
+  async function handleLogin(email, password) {
+    try {
+      const userCredential = await login(email, password);
+      const user = userCredential.user;
+
+      // Fetch displayName from Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        localStorage.setItem("displayName", userData.displayName || "");
+      } else {
+        localStorage.setItem("displayName", user.displayName || "");
+      }
+
+      // ...rest of your login logic
+    } catch (error) {
+      // handle error
+    }
+  }
 
   return (
     <div className="">
@@ -191,17 +229,15 @@ const Header = () => {
               </span>
             </p>
           </div>
-          {isLogin ? (
+          {isLogin && localDisplayName && (
             <div className="flex flex-col items-start justify-center headerHover">
-              <p className="text-xs text-lightText font-light"></p>
-
-              <p className="hidden md:inline-flex text-sm font-semibold -mt-1 text-whiteText">
-                <span>
-                  <MenuPopupState logout={logout} setLogin={setLogin} />
-                </span>
+              {/* <p className="text-xs text-lightText font-light">Hello, {localDisplayName}</p> */}
+              <p className="flex text-sm font-semibold -mt-1 text-whiteText">
+                <MenuPopupState logout={logout} setLogin={setLogin} />
               </p>
             </div>
-          ) : (
+          )}
+          {!isLogin && (
             <Link to="/signin">
               <div className="flex flex-col items-start justify-center headerHover ">
                 <p className="  font-bold text-[10px] px-5">

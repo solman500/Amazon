@@ -43,12 +43,12 @@ const PaymentForm = () => {
             <div className='flex'>
                 <Link to="/"><img src={amazon} alt="logo" width={300} /></Link>
                 <div className='w-screen flex item-center '>
-                    <p style={{ left: "34%" }} className='text-2xl relative mt-20'>
+                    <p style={{ left: "34%" }} className='text-2xl  mt-20'>
                         Amazon checkout form
                     </p>
                 </div>
             </div>
-            <div style={{ height: "84vh" }} className="flex justify-center items-center">
+            <div style={{ height: "84vh" }} className="flex justify-center items-center font-mono my-5">
                 <form className="max-w-xl p-10 bg-white rounded shadow-xl" onSubmit={handleSubmit}>
                     <p className="text-gray-800 font-medium mb-3 text-center text-lg">
                         <span className='mr-3 font-bold'> Greetings {name}</span>

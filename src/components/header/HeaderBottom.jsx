@@ -63,10 +63,10 @@ export default function HeaderBottom(props) {
               {language === "en"
                 ? Localization.header.all.en
                 : Localization.header.all.ar}
-              {/* All */}
+              
             </li>
-            <div className="hederul d-flex">
-              <li className="hidden md:inline-flex headerHover">
+            <div className=" d-flex space-x-5 ">
+              <li className="hidden md:inline-flex headerHover ">
                 <Link to="/">
                   {language === "en"
                     ? Localization.header.home.en

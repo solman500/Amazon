@@ -38,7 +38,7 @@ export async function register(email, password, displayName) {
 // console.log(user.uid)
 
 export function login(email, password) {
-  return signInWithEmailAndPassword(auth, email, password);
+  return signInWithEmailAndPassword(auth, email.trim(), password);
 }
 
 export function logout() {
