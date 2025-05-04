@@ -7,7 +7,7 @@
 
 @layer components {
     .headerHover {
-        @apply px-2 h-[80%] flex items-center border border-transparent hover:border-white cursor-pointer duration-100;
+        @apply h-[80%] flex items-center border border-transparent hover:border-white cursor-pointer duration-100;
     }
 
     .headerHover:hover {

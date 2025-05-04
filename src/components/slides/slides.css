@@ -14,48 +14,142 @@
     background-color: white;
     border-radius: 10px;
     object-fit: cover;
-  }
-  
-  /* Adjust image size within the slide */
-  #imgCat img {
+}
+
+/* Adjust image size within the slide */
+#imgCat img {
     width: 100%;
     height: auto;
     max-height: 100%;
     object-fit: contain;
-  }
-  
-  /* Optional: Adjust heading padding on smaller screens */
-  .today_deals_heading {
-    text-align: center;
-    padding: 1rem 0;
-  }
-  
-  .today_deals_heading h1 {
-    font-size: 1.5rem;
-  }
-  
-  .today_deals_heading p a {
-    font-size: 0.9rem;
-    color: #007185;
-  }
-  
-  /* Responsive controls */
-  @media (max-width: 768px) {
+}
+
+.today_deals_heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+   font-size: x-large;
+    margin: 0.75rem;
+    border-radius: 0.375rem;
+}
+
+.today_deals_heading h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+
+
+/* React Slick Custom Styles */
+.slick-slider {
+    position: relative;
+    padding: 0 2rem;
+    margin: 0 -0.5rem;
+}
+
+.slick-list {
+    overflow: hidden;
+    margin: 0 -0.5rem;
+}
+
+.slick-slide {
+    padding: 0 0.5rem;
+    height: auto;
+}
+
+.slick-slide > div {
+    height: 100%;
+}
+
+.custom-next,
+.custom-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    cursor: pointer;
+    background-color: white;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.custom-next:hover,
+.custom-prev:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.custom-next {
+    right: 5;
+}
+
+.custom-prev {
+    left: 0;
+}
+
+.custom-next img,
+.custom-prev img {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .slick-slider {
+        padding: 0 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .slick-slider {
+        padding: 0 1.5rem;
+    }
+    
+    .custom-next,
+    .custom-prev {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+    
+    .custom-next img,
+    .custom-prev img {
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+
     #imgCat {
-      min-width: 120px;
-      height: 160px;
+        min-width: 120px;
+        height: 160px;
     }
-  
-    .today_deals_heading h1 {
-      font-size: 1.2rem;
+}
+
+@media (max-width: 480px) {
+    .slick-slider {
+        padding: 0 1.25rem;
     }
-  
-    .today_deals_heading p a {
-      font-size: 0.8rem;
+    
+    .custom-next,
+    .custom-prev {
+        width: 1.5rem;
+        height: 1.5rem;
     }
-  
-    .swiper-slide {
-      padding: 0 5px;
+    
+    .custom-next img,
+    .custom-prev img {
+        width: 1rem;
+        height: 1rem;
     }
-  }
+
+    #imgCat {
+        min-width: 100px;
+        height: 140px;
+    }
+}
   

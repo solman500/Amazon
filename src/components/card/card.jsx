@@ -67,10 +67,10 @@ const Card = ({ prd }) => {
 
   return (
     <>
-      <div className="box">
+      <div className="box ">
         <figure
           key={uuidv4()}
-          style={{ width: 200, height: 500 }}
+          
           className={hoverON ? "prd-card card-border" : "prd-card"}
           onMouseEnter={showSecondImg}
           onMouseLeave={hideSecondImg}
